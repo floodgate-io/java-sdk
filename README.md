@@ -15,7 +15,11 @@ Install the Floodgate Java SDK
 ### Maven
 
 ```xml
-# TODO: pom.xml snippet
+<dependency>
+  <groupId>io.floodgate</groupId>
+  <artifactId>sdk</artifactId>
+  <version>1.0.0</version>
+</dependency>
 ```
 
 ### Gradle
@@ -27,26 +31,28 @@ Install the Floodgate Java SDK
 
 Below is a simple example of how you can use the Java SDK to check on the status of a flag.
 
+Add required imports
+
 ```java
-// TODO: EXAMPLE
+import io.floodgate.sdk.FloodGateClientFactory;
 ```
 
 Create a FloodGate Client instance
 
 ```java
-// TODO: EXAMPLE
+var client = FloodGateClientFactory.create("YOUR-API-KEY");
 ```
 
 Retrieve your flag value
 
 ```java
-// TODO: EXAMPLE
-```
+var myFeatureFlag = client.getValue("my-feature-flag", false);
 
-Finishing up
-
-```java
-// TODO: EXAMPLE
+if (myFeatureFlag) {
+    System.out.println("my-feature-flag enabled");
+} else {
+    System.out.println("my-feature-flag not yet enabled");
+}
 ```
 
 ## Submitting issues
