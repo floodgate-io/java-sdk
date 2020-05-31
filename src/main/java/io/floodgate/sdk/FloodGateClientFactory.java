@@ -16,4 +16,10 @@ public class FloodGateClientFactory {
 
         return new DefaultFloodGateClient(featureFlagService);
     }
+
+    public static FloodGateClient create(ClientConfig config) {
+        var featureFlagService = FeatureFlagServiceFactory.create(config);
+
+        return new DefaultFloodGateClient(featureFlagService);
+    }
 }

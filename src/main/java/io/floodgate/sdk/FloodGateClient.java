@@ -53,7 +53,9 @@ public interface FloodGateClient {
      * @param defaultValue A fallback value to return if the no flag data is found for the key given
      * @return Boolean value of the flag or the defaultValue if not found
      */
-    boolean getValue(String key, boolean defaultValue);
+    default boolean getValue(String key, boolean defaultValue) {
+        return getValue(key, defaultValue, null);
+    }
 
     /**
      * Get value of flag for the given key
@@ -63,9 +65,7 @@ public interface FloodGateClient {
      * @param user         A user to compare against when flag targeting is enabled
      * @return Boolean value of the flag or the defaultValue if not found
      */
-    default boolean getValue(String key, boolean defaultValue, User user) {
-        throw new UnsupportedOperationException();
-    }
+    boolean getValue(String key, boolean defaultValue, User user);
 
     /**
      * Get value of flag for the given key
