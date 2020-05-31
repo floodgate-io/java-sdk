@@ -1,12 +1,12 @@
 package io.floodgate.sdk;
 
-import io.floodgate.sdk.config.ClientConfig;
+import io.floodgate.sdk.services.FeatureFlagService;
 
 class DefaultFloodGateClient implements FloodGateClient {
-    private final ClientConfig config;
+    private final FeatureFlagService flagService;
 
-    public DefaultFloodGateClient(ClientConfig config) {
-        this.config = config;
+    public DefaultFloodGateClient(FeatureFlagService flagService) {
+        this.flagService = flagService;
     }
 
     /**
