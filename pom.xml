@@ -17,10 +17,28 @@
     </properties>
 
     <dependencies>
+        <!--#################################################
+        ## Runtime deps
+        #####################################################-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
+        <!--#################################################
+        ## Test deps
+        #####################################################-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.6.2</version>
+            <version>5.4.2</version> <!-- https://github.com/sormuras/junit-platform-maven-plugin/issues/39 -->
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>3.3.3</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -34,11 +52,19 @@
                 <groupId>de.sormuras.junit</groupId>
                 <artifactId>junit-platform-maven-plugin</artifactId>
                 <version>1.0.0-M5</version>
-                <extensions>true</extensions> <!-- Necessary to execute it in 'test' phase. -->
+                <extensions>true</extensions>
                 <configuration>
-                    <executor>JAVA</executor>
+                    <executor>DIRECT</executor>
+                    <javaOptions>
+                        <inheritIO>true</inheritIO>
+                        <additionalOptions>
+                            <additionalOption>--show-version</additionalOption>
+                            <additionalOption>--show-module-resolution</additionalOption>
+                        </additionalOptions>
+                    </javaOptions>
                 </configuration>
             </plugin>
+            <!-- Docs and source -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
