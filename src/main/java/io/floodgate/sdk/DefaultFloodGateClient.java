@@ -19,20 +19,11 @@ class DefaultFloodGateClient implements FloodGateClient {
     public boolean getValue(String key, boolean defaultValue, User user) {
         var flag = getFlag(key, user);
 
-        if(flag.isEmpty())
+        if (flag.isEmpty())
             return defaultValue;
 
         return Boolean.valueOf(flag.get().value);
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void flushEvents() {
-        throw new UnsupportedOperationException();
-    }
-
 
     private Optional<FeatureFlag> getFlag(String key, User user) {
 
@@ -41,11 +32,11 @@ class DefaultFloodGateClient implements FloodGateClient {
 
         var flags = flagService.getFlags();
 
-        if(flags.isEmpty())
+        if (flags.isEmpty())
             return Optional.empty();
 
         var flag = flags.get().get(key);
-        if(flag == null)
+        if (flag == null)
             return Optional.empty();
 
         return Optional.of(flag);

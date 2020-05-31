@@ -112,10 +112,4 @@ public interface FloodGateClient {
     default double getValue(String key, double defaultValue, User user) {
         throw new UnsupportedOperationException();
     }
-
-
-    /**
-     * Flush any events in the event queue to the Floodgate servers
-     */
-    void flushEvents();
 }
