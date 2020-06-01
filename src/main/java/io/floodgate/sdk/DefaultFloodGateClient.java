@@ -2,8 +2,10 @@ package io.floodgate.sdk;
 
 import io.floodgate.sdk.models.FeatureFlag;
 import io.floodgate.sdk.services.FeatureFlagService;
+import io.floodgate.sdk.utils.RolloutHelper;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 class DefaultFloodGateClient implements FloodGateClient {
     private final FeatureFlagService flagService;
@@ -16,29 +18,73 @@ class DefaultFloodGateClient implements FloodGateClient {
      * {@inheritDoc}
      */
     @Override
-    public boolean getValue(String key, boolean defaultValue, User user) {
-        var flag = getFlag(key, user);
+    public String getValue(String key, String defaultValue, Optional<User> user) {
+        var opt = getFlagValue(key, user);
 
-        if (flag.isEmpty())
-            return defaultValue;
-
-        return Boolean.valueOf(flag.get().value);
+        return opt.orElse(defaultValue);
     }
 
-    private Optional<FeatureFlag> getFlag(String key, User user) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean getValue(String key, boolean defaultValue, Optional<User> user) {
+
+        var opt = getFlagValue(key, user);
+
+        return opt.map(o -> Boolean.valueOf(o))
+                .orElse(defaultValue);
+    }
+
+    private Optional<String> getFlagValue(String key, Optional<User> user) {
 
         // TODO: user targeting from config user
         // TODO: user targeting from override user
 
-        var flags = flagService.getFlags();
+        var opt = flagService.getFlags();
 
-        if (flags.isEmpty())
+        if (opt.isEmpty())
             return Optional.empty();
 
-        var flag = flags.get().get(key);
+        var flags = opt.get();
+
+        var flag = flags.get(key);
         if (flag == null)
             return Optional.empty();
 
-        return Optional.of(flag);
+        return Stream.of(
+                getTargetedValue(flag, user),
+                getRolloutValue(flag, user),
+                Optional.of(flag.value)
+        ).filter(Optional::isPresent)
+                .map(Optional::get)
+                .findFirst();
+    }
+
+    private Optional<String> getRolloutValue(FeatureFlag flag, Optional<User> user) {
+        if (!flag.isRollout() || user.isEmpty())
+            return Optional.empty();
+
+        var scale = RolloutHelper.GetScale(flag, user.get());
+
+        var lower = 0;
+        var upper = 0;
+
+        for (var rollout : flag.rollouts) {
+            upper += rollout.percentage;
+
+            if (scale >= lower && scale <= upper) {
+                return Optional.ofNullable(rollout.value);
+            }
+
+            lower += rollout.percentage;
+        }
+
+        return Optional.empty();
+    }
+
+    private Optional<String> getTargetedValue(FeatureFlag flag, Optional<User> user) {
+        // TODO: Discuss targeted rollouts?
+        return Optional.empty();
     }
 }

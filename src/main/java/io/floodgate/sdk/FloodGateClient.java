@@ -1,5 +1,7 @@
 package io.floodgate.sdk;
 
+import java.util.Optional;
+
 public interface FloodGateClient {
     /**
      * Get value of flag for the given key
@@ -42,8 +44,18 @@ public interface FloodGateClient {
      * @return String value of the flag or the defaultValue if not found
      */
     default String getValue(String key, String defaultValue, User user) {
-        throw new UnsupportedOperationException();
+        return getValue(key, defaultValue, Optional.of(user));
     }
+
+    /**
+     * Get value of flag for the given key
+     *
+     * @param key          The flag key to check
+     * @param defaultValue A fallback value to return if the no flag data is found for the key given
+     * @param user         A user to compare against when flag targeting is enabled
+     * @return String value of the flag or the defaultValue if not found
+     */
+    String getValue(String key, String defaultValue, Optional<User> user);
 
 
     /**
@@ -54,7 +66,7 @@ public interface FloodGateClient {
      * @return Boolean value of the flag or the defaultValue if not found
      */
     default boolean getValue(String key, boolean defaultValue) {
-        return getValue(key, defaultValue, null);
+        return getValue(key, defaultValue, Optional.empty());
     }
 
     /**
@@ -65,7 +77,19 @@ public interface FloodGateClient {
      * @param user         A user to compare against when flag targeting is enabled
      * @return Boolean value of the flag or the defaultValue if not found
      */
-    boolean getValue(String key, boolean defaultValue, User user);
+    default boolean getValue(String key, boolean defaultValue, User user) {
+        return getValue(key, defaultValue, Optional.of(user));
+    }
+
+    /**
+     * Get value of flag for the given key
+     *
+     * @param key          The flag key to check
+     * @param defaultValue A fallback value to return if the no flag data is found for the key given
+     * @param user         A user to compare against when flag targeting is enabled
+     * @return Boolean value of the flag or the defaultValue if not found
+     */
+    boolean getValue(String key, boolean defaultValue, Optional<User> user);
 
     /**
      * Get value of flag for the given key
