@@ -17,10 +17,10 @@ public interface FloodGateClient {
      * Get value of flag for the given key
      *
      * @param key  The flag key to check
-     * @param user A user to compare against when flag targeting is enabled
+     * @param overrideUser A user to compare against when flag targeting is enabled
      * @return String value of the flag. If no flag data is found for the key given the default string of `False` is returned
      */
-    default String getValue(String key, User user) {
+    default String getValue(String key, User overrideUser) {
         throw new UnsupportedOperationException();
     }
 
@@ -32,7 +32,7 @@ public interface FloodGateClient {
      * @return String value of the flag or the defaultValue if not found
      */
     default String getValue(String key, String defaultValue) {
-        throw new UnsupportedOperationException();
+        return getValue(key, defaultValue, Optional.empty());
     }
 
     /**
@@ -40,11 +40,11 @@ public interface FloodGateClient {
      *
      * @param key          The flag key to check
      * @param defaultValue A fallback value to return if the no flag data is found for the key given
-     * @param user         A user to compare against when flag targeting is enabled
+     * @param overrideUser         A user to compare against when flag targeting is enabled
      * @return String value of the flag or the defaultValue if not found
      */
-    default String getValue(String key, String defaultValue, User user) {
-        return getValue(key, defaultValue, Optional.of(user));
+    default String getValue(String key, String defaultValue, User overrideUser) {
+        return getValue(key, defaultValue, Optional.of(overrideUser));
     }
 
     /**
@@ -52,10 +52,10 @@ public interface FloodGateClient {
      *
      * @param key          The flag key to check
      * @param defaultValue A fallback value to return if the no flag data is found for the key given
-     * @param user         A user to compare against when flag targeting is enabled
+     * @param overrideUser         A user to compare against when flag targeting is enabled
      * @return String value of the flag or the defaultValue if not found
      */
-    String getValue(String key, String defaultValue, Optional<User> user);
+    String getValue(String key, String defaultValue, Optional<User> overrideUser);
 
 
     /**
@@ -74,11 +74,11 @@ public interface FloodGateClient {
      *
      * @param key          The flag key to check
      * @param defaultValue A fallback value to return if the no flag data is found for the key given
-     * @param user         A user to compare against when flag targeting is enabled
+     * @param overrideUser         A user to compare against when flag targeting is enabled
      * @return Boolean value of the flag or the defaultValue if not found
      */
-    default boolean getValue(String key, boolean defaultValue, User user) {
-        return getValue(key, defaultValue, Optional.of(user));
+    default boolean getValue(String key, boolean defaultValue, User overrideUser) {
+        return getValue(key, defaultValue, Optional.of(overrideUser));
     }
 
     /**
@@ -86,10 +86,10 @@ public interface FloodGateClient {
      *
      * @param key          The flag key to check
      * @param defaultValue A fallback value to return if the no flag data is found for the key given
-     * @param user         A user to compare against when flag targeting is enabled
+     * @param overrideUser         A user to compare against when flag targeting is enabled
      * @return Boolean value of the flag or the defaultValue if not found
      */
-    boolean getValue(String key, boolean defaultValue, Optional<User> user);
+    boolean getValue(String key, boolean defaultValue, Optional<User> overrideUser);
 
     /**
      * Get value of flag for the given key
@@ -107,10 +107,10 @@ public interface FloodGateClient {
      *
      * @param key          The flag key to check
      * @param defaultValue A fallback value to return if the no flag data is found for the key given
-     * @param user         A user to compare against when flag targeting is enabled
+     * @param overrideUser         A user to compare against when flag targeting is enabled
      * @return Integer value of the flag or the defaultValue if not found
      */
-    default int getValue(String key, int defaultValue, User user) {
+    default int getValue(String key, int defaultValue, User overrideUser) {
         throw new UnsupportedOperationException();
     }
 
@@ -130,10 +130,10 @@ public interface FloodGateClient {
      *
      * @param key          The flag key to check
      * @param defaultValue A fallback value to return if the no flag data is found for the key given
-     * @param user         A user to compare against when flag targeting is enabled
+     * @param overrideUser         A user to compare against when flag targeting is enabled
      * @return Dobule value of the flag or the defaultValue if not found
      */
-    default double getValue(String key, double defaultValue, User user) {
+    default double getValue(String key, double defaultValue, User overrideUser) {
         throw new UnsupportedOperationException();
     }
 }

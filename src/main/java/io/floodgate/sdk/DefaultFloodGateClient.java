@@ -3,6 +3,7 @@ package io.floodgate.sdk;
 import io.floodgate.sdk.models.FeatureFlag;
 import io.floodgate.sdk.services.FeatureFlagService;
 import io.floodgate.sdk.utils.RolloutHelper;
+import io.floodgate.sdk.utils.TargetHelper;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -18,8 +19,8 @@ class DefaultFloodGateClient implements FloodGateClient {
      * {@inheritDoc}
      */
     @Override
-    public String getValue(String key, String defaultValue, Optional<User> user) {
-        var opt = getFlagValue(key, user);
+    public String getValue(String key, String defaultValue, Optional<User> overrideUser) {
+        var opt = getFlagValue(key, overrideUser);
 
         return opt.orElse(defaultValue);
     }
@@ -28,18 +29,18 @@ class DefaultFloodGateClient implements FloodGateClient {
      * {@inheritDoc}
      */
     @Override
-    public boolean getValue(String key, boolean defaultValue, Optional<User> user) {
+    public boolean getValue(String key, boolean defaultValue, Optional<User> overrideUser) {
 
-        var opt = getFlagValue(key, user);
+        var opt = getFlagValue(key, overrideUser);
 
         return opt.map(o -> Boolean.valueOf(o))
                 .orElse(defaultValue);
     }
 
-    private Optional<String> getFlagValue(String key, Optional<User> user) {
+    private Optional<String> getFlagValue(String key, Optional<User> overrideUser) {
 
         // TODO: user targeting from config user
-        // TODO: user targeting from override user
+        var user = overrideUser;
 
         var opt = flagService.getFlags();
 
@@ -84,7 +85,13 @@ class DefaultFloodGateClient implements FloodGateClient {
     }
 
     private Optional<String> getTargetedValue(FeatureFlag flag, Optional<User> user) {
-        // TODO: Discuss targeted rollouts?
-        return Optional.empty();
+        if(!flag.isTargeted() || user.isEmpty())
+            return Optional.empty();
+
+        var targeted = flag.targets.stream()
+                .filter(t -> TargetHelper.isValidTargetForUser(t, user.get()))
+                .findFirst();
+
+        return targeted.map(t -> t.value);
     }
 }

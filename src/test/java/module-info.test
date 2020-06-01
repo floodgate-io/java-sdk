@@ -6,6 +6,8 @@
   io.floodgate.sdk/io.floodgate.sdk.config=org.junit.platform.commons
 --add-opens
   io.floodgate.sdk/io.floodgate.sdk.services=org.junit.platform.commons
+--add-opens
+  io.floodgate.sdk/io.floodgate.sdk.utils=org.junit.platform.commons
 
 
 --add-opens

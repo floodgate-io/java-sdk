@@ -9,8 +9,13 @@ public class FeatureFlag {
     public String key;
     public String value;
     public List<Rollout> rollouts;
+    public List<Target> targets;
 
     public boolean isRollout() {
         return rollouts != null && !rollouts.isEmpty();
+    }
+
+    public boolean isTargeted() {
+        return targets != null && !targets.isEmpty();
     }
 }
