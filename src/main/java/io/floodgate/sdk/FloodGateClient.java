@@ -21,7 +21,7 @@ public interface FloodGateClient {
      * @return String value of the flag. If no flag data is found for the key given the default string of `False` is returned
      */
     default String getValue(String key, User overrideUser) {
-        throw new UnsupportedOperationException();
+        return getValue(key, "false", Optional.empty());
     }
 
     /**

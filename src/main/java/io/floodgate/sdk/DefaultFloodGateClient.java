@@ -1,5 +1,6 @@
 package io.floodgate.sdk;
 
+import io.floodgate.sdk.config.ClientConfig;
 import io.floodgate.sdk.models.FeatureFlag;
 import io.floodgate.sdk.services.FeatureFlagService;
 import io.floodgate.sdk.utils.RolloutHelper;
@@ -9,10 +10,13 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 class DefaultFloodGateClient implements FloodGateClient {
+    private final ClientConfig config;
     private final FeatureFlagService flagService;
 
-    public DefaultFloodGateClient(FeatureFlagService flagService) {
+    public DefaultFloodGateClient(ClientConfig config, FeatureFlagService flagService) {
+        this.config = config;
         this.flagService = flagService;
+
     }
 
     /**
@@ -40,7 +44,7 @@ class DefaultFloodGateClient implements FloodGateClient {
     private Optional<String> getFlagValue(String key, Optional<User> overrideUser) {
 
         // TODO: user targeting from config user
-        var user = overrideUser;
+        var user = overrideUser.or(() -> config.getUser());
 
         var opt = flagService.getFlags();
 

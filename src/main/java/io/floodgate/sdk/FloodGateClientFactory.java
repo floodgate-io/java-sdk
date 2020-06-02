@@ -1,6 +1,7 @@
 package io.floodgate.sdk;
 
 import io.floodgate.sdk.config.ClientConfig;
+import io.floodgate.sdk.services.FeatureFlagService;
 import io.floodgate.sdk.services.FeatureFlagServiceFactory;
 
 public class FloodGateClientFactory {
@@ -14,12 +15,12 @@ public class FloodGateClientFactory {
         var config = new ClientConfig(apiKey);
         var featureFlagService = FeatureFlagServiceFactory.create(config);
 
-        return new DefaultFloodGateClient(featureFlagService);
+        return new DefaultFloodGateClient(config, featureFlagService);
     }
 
     public static FloodGateClient create(ClientConfig config) {
         var featureFlagService = FeatureFlagServiceFactory.create(config);
 
-        return new DefaultFloodGateClient(featureFlagService);
+        return new DefaultFloodGateClient(config, featureFlagService);
     }
 }
