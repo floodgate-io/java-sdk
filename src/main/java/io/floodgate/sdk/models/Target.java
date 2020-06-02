@@ -9,8 +9,6 @@ public class Target {
     public String value;
     private List<Rule> rules;
 
-    // TODO: Why do targets have rollouts array?
-
     public List<Rule> getRules() {
         return rules;
     }

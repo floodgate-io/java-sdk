@@ -10,8 +10,7 @@ public class ClientConfig {
     private String apiKey;
     private String localFlagsFilePath;
     private User user;
-    private int invalidateAfter;
-    private boolean shouldAutoInvalidate;
+    private int updateInterval = 60;
 
     public ClientConfig(String apiKey) {
         if(apiKey == null || apiKey.trim().isEmpty()) {
@@ -40,5 +39,13 @@ public class ClientConfig {
         if(user == null)
             throw new IllegalArgumentException("user must not be null");
         this.user = user;
+    }
+
+    public int getUpdateInterval() {
+        return updateInterval;
+    }
+
+    public void setUpdateInterval(int updateInterval) {
+        this.updateInterval = updateInterval;
     }
 }
