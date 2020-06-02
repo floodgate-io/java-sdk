@@ -40,9 +40,6 @@ public class RuleHelper {
     }
 
     private static boolean evaluateGreaterThan(List<String> values, String attribute, boolean allowEquals) {
-        // TODO: This only checks first value, .Net does same, is this OK?
-        // TODO: Inconsistent with other rules, not documented on site.
-
         var opt = values.stream().findFirst();
 
         try {
