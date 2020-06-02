@@ -1,7 +1,5 @@
 package io.floodgate.sdk;
 
-import io.floodgate.sdk.caching.Constants;
-import io.floodgate.sdk.caching.SimpleMemoryCache;
 import io.floodgate.sdk.config.ClientConfig;
 import io.floodgate.sdk.models.FeatureFlag;
 import io.floodgate.sdk.services.FeatureFlagService;
@@ -20,7 +18,7 @@ class DefaultFloodGateClient implements FloodGateClient {
 
     private static final System.Logger logger = System.getLogger(DefaultFloodGateClient.class.getName());
 
-    public DefaultFloodGateClient(ClientConfig config, FeatureFlagService flagService, SimpleMemoryCache cache) {
+    public DefaultFloodGateClient(ClientConfig config, FeatureFlagService flagService) {
         this.config = config;
         this.flagService = flagService;
         this.timer = new Timer();
@@ -28,16 +26,11 @@ class DefaultFloodGateClient implements FloodGateClient {
         var updateCachedFlagsTask = new TimerTask() {
             @Override
             public void run() {
-                cache.invalidate(Constants.FEATURE_FLAG_CACHE_KEY);
-
-                logger.log(System.Logger.Level.INFO, "Priming feature flag cache");
-                flagService.getFlags();
+                flagService.reload();
             }
         };
 
-        var period = config.getUpdateInterval() * 1000;
-
-        this.timer.schedule(updateCachedFlagsTask, 0, period);
+        this.timer.schedule(updateCachedFlagsTask, 0, config.getUpdateInterval());
     }
 
     /**

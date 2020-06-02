@@ -27,7 +27,7 @@ public class User {
             throw new IllegalArgumentException("name is required");
 
         if (value == null || value.trim().isEmpty())
-            throw new IllegalArgumentException("name is required");
+            throw new IllegalArgumentException("value is required");
 
         attributes.put(name.toLowerCase(), value);
     }

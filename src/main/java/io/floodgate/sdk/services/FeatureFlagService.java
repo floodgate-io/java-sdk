@@ -7,4 +7,8 @@ import java.util.Optional;
 
 public interface FeatureFlagService {
     Optional<Map<String,FeatureFlag>> getFlags();
+
+    default void reload() {
+        // NOOP
+    }
 }

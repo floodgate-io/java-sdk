@@ -8,13 +8,14 @@ import io.floodgate.sdk.io.FileReader;
 public class FeatureFlagServiceFactory {
     public static CachingFeatureFlagService create(ClientConfig config) {
         var mapper = new ObjectMapper();
+        var cache = new DefaultMemoryCache();
 
         var fileSystem = new FileSystemFeatureFlagService(config, new FileReader(), mapper);
-        var cdn = new CdnFeatureFlagService(config, mapper);
+        var cdn = new CdnFeatureFlagService(config, mapper, cache);
 
         var mux = new MultiplexingFeatureFlagService(fileSystem, cdn);
 
-        var cache = new DefaultMemoryCache();
+
         return new CachingFeatureFlagService(cache, mux);
     }
 }

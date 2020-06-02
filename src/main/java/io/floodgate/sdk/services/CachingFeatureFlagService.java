@@ -29,12 +29,22 @@ public class CachingFeatureFlagService implements FeatureFlagService {
         }
 
         log.log(System.Logger.Level.DEBUG, "Cache miss for {}", Constants.FEATURE_FLAG_CACHE_KEY);
-            var results = inner.getFlags();
+        var results = inner.getFlags();
 
         if (results.isPresent()) {
             cache.set(Constants.FEATURE_FLAG_CACHE_KEY, results);
         }
 
         return results;
+    }
+
+    @Override
+    public void reload() {
+        log.log(System.Logger.Level.DEBUG, "Reloading flags from inner service");
+        var results = inner.getFlags();
+
+        if (results.isPresent()) {
+            cache.set(Constants.FEATURE_FLAG_CACHE_KEY, results);
+        }
     }
 }
