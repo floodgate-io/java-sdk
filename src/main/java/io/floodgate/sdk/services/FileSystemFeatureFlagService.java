@@ -12,11 +12,15 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static java.lang.System.Logger.Level;
+
 class FileSystemFeatureFlagService implements FeatureFlagService {
 
     private final ClientConfig config;
     private final FileReader fileReader;
     private final ObjectMapper json;
+
+    private static final System.Logger logger = System.getLogger(FileSystemFeatureFlagService.class.getName());
 
     public FileSystemFeatureFlagService(ClientConfig config, FileReader fileReader, ObjectMapper json) {
         this.config = config;
@@ -29,6 +33,7 @@ class FileSystemFeatureFlagService implements FeatureFlagService {
         var path = config.getLocalFlagsFilePath();
 
         if(path == null) {
+            logger.log(Level.DEBUG, "Local feature flags file path has not been configured");
             return Optional.empty();
         }
 
@@ -42,6 +47,8 @@ class FileSystemFeatureFlagService implements FeatureFlagService {
 
             var map = items.stream()
                     .collect(Collectors.toMap(i -> i.key, i -> i));
+
+            logger.log(Level.DEBUG, "Loaded flags from local feature flags file");
 
             return Optional.of(map);
         } catch (IOException e) {
