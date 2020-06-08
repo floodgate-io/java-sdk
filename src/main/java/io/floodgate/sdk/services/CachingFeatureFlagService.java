@@ -7,6 +7,9 @@ import io.floodgate.sdk.models.FeatureFlag;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Decorates another FeatureFlagService to allow caching of results.
+ */
 public class CachingFeatureFlagService implements FeatureFlagService {
     private final SimpleMemoryCache cache;
     private final FeatureFlagService inner;

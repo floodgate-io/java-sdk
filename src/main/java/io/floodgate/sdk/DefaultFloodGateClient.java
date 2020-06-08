@@ -1,6 +1,6 @@
 package io.floodgate.sdk;
 
-import io.floodgate.sdk.config.ClientConfig;
+import io.floodgate.sdk.config.FloodGateClientConfig;
 import io.floodgate.sdk.models.FeatureFlag;
 import io.floodgate.sdk.services.FeatureFlagService;
 import io.floodgate.sdk.utils.RolloutHelper;
@@ -11,26 +11,24 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.stream.Stream;
 
+import static java.lang.System.Logger.Level;
+
 class DefaultFloodGateClient implements FloodGateClient {
-    private final ClientConfig config;
+    private final FloodGateClientConfig config;
     private final FeatureFlagService flagService;
     private final Timer timer;
 
     private static final System.Logger logger = System.getLogger(DefaultFloodGateClient.class.getName());
 
-    public DefaultFloodGateClient(ClientConfig config, FeatureFlagService flagService) {
+    public DefaultFloodGateClient(FloodGateClientConfig config, FeatureFlagService flagService) {
         this.config = config;
         this.flagService = flagService;
-        this.timer = new Timer();
+        this.timer = new Timer(true);
 
-        var updateCachedFlagsTask = new TimerTask() {
-            @Override
-            public void run() {
-                flagService.reload();
-            }
-        };
-
-        this.timer.schedule(updateCachedFlagsTask, 0, config.getUpdateInterval());
+        logger.log(Level.DEBUG, "Auto Update enabled: {}", config.isAutoUpdateEnabled());
+        if(config.isAutoUpdateEnabled()) {
+            this.timer.schedule(new AutoUpdateTask(), 0, config.getAutoUpdateInterval());
+        }
     }
 
     /**
@@ -111,5 +109,14 @@ class DefaultFloodGateClient implements FloodGateClient {
                 .findFirst();
 
         return targeted.map(t -> t.value);
+    }
+
+
+    private class AutoUpdateTask extends TimerTask {
+        @Override
+        public void run() {
+            logger.log(Level.DEBUG, "Begin auto update of cached flags");
+            flagService.reload();
+        }
     }
 }

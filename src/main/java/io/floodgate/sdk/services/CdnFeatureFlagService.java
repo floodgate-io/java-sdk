@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.floodgate.sdk.caching.Constants;
 import io.floodgate.sdk.caching.SimpleMemoryCache;
-import io.floodgate.sdk.config.ClientConfig;
+import io.floodgate.sdk.config.FloodGateClientConfig;
 import io.floodgate.sdk.models.FeatureFlag;
 
 import java.io.IOException;
@@ -19,15 +19,18 @@ import java.util.stream.Collectors;
 
 import static java.lang.System.Logger.Level;
 
+/**
+ * Loads feature flags from the FloodGate API
+ */
 public class CdnFeatureFlagService implements FeatureFlagService {
-    private final ClientConfig config;
+    private final FloodGateClientConfig config;
     private final ObjectMapper json;
     private final SimpleMemoryCache cache;
     private final HttpClient client;
 
     private static final System.Logger logger = System.getLogger(CdnFeatureFlagService.class.getName());
 
-    public CdnFeatureFlagService(ClientConfig config, ObjectMapper json, SimpleMemoryCache cache) {
+    public CdnFeatureFlagService(FloodGateClientConfig config, ObjectMapper json, SimpleMemoryCache cache) {
         this.config = config;
         this.json = json;
         this.cache = cache;

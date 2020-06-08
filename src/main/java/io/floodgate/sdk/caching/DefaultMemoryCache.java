@@ -3,6 +3,9 @@ package io.floodgate.sdk.caching;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Simple cache to store arbitrary data under an associated key in memory.
+ */
 public class DefaultMemoryCache implements SimpleMemoryCache {
     private static Map<String, Object> cache = new HashMap<>();
 
@@ -21,14 +24,6 @@ public class DefaultMemoryCache implements SimpleMemoryCache {
         synchronized (cache) {
             logger.log(System.Logger.Level.DEBUG, "get key {}", key);
             return cache.get(key);
-        }
-    }
-
-    @Override
-    public void invalidate(String key) {
-        synchronized (cache) {
-            logger.log(System.Logger.Level.DEBUG, "Invalidating for key {}", key);
-            cache.remove(key);
         }
     }
 }
