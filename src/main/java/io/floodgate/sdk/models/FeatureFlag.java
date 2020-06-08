@@ -18,4 +18,11 @@ public class FeatureFlag {
     public boolean isTargeted() {
         return targets != null && !targets.isEmpty();
     }
+
+    public FeatureFlag() {}
+
+    public FeatureFlag(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
 }

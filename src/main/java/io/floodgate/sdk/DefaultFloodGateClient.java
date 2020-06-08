@@ -53,6 +53,32 @@ class DefaultFloodGateClient implements FloodGateClient {
                 .orElse(defaultValue);
     }
 
+    @Override
+    public int getValue(String key, int defaultValue, Optional<User> overrideUser) {
+        var opt = getFlagValue(key, overrideUser);
+
+        try{
+            return opt.map(o -> Integer.valueOf(o))
+                    .orElse(defaultValue);
+        }
+        catch (NumberFormatException ex){
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public double getValue(String key, double defaultValue, Optional<User> overrideUser) {
+        var opt = getFlagValue(key, overrideUser);
+
+        try{
+            return opt.map(o -> Double.valueOf(o))
+                    .orElse(defaultValue);
+        }
+        catch (NumberFormatException ex){
+            return defaultValue;
+        }
+    }
+
     private Optional<String> getFlagValue(String key, Optional<User> overrideUser) {
 
         // TODO: user targeting from config user
