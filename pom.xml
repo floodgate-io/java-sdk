@@ -9,12 +9,41 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <name>Floodgate Java SDK</name>
+    <description>Java SDK for floodgate.io feature flags.</description>
     <url>https://floodgate.io</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>11</maven.compiler.release>
     </properties>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Mathew Taylor</name>
+            <email>support@floodgate.io</email>
+            <organization>Floodgate</organization>
+            <organizationUrl>https://floodgate.io</organizationUrl>
+        </developer>
+        <developer>
+            <name>Paul Johnson</name>
+            <email>paul@bigtheta.co.uk</email>
+            <organization>big theta</organization>
+            <organizationUrl>https://bigtheta.co.uk/</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com:floodgate-io/java-sdk.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:floodgate-io/java-sdk.git</developerConnection>
+        <url>https://github.com/floodgate-io/java-sdk/tree/master</url>
+    </scm>
 
     <dependencies>
         <!--#################################################
@@ -42,6 +71,12 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
     <build>
         <plugins>
             <plugin>
@@ -75,6 +110,34 @@
                             <additionalOption>--show-module-resolution</additionalOption>
                         </additionalOptions>
                     </javaOptions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                            <keyname>F3C63DF7B07C322677A32222A35975D70FDD2675</keyname>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.8</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>false</autoReleaseAfterClose>
                 </configuration>
             </plugin>
             <!-- Docs and source -->
