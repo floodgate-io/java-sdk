@@ -24,29 +24,59 @@ Install the Floodgate Java SDK
 
 ### Gradle
 ```groovy
-// TODO: build.gradle example
+// Ensure Maven Central listed as repository
+
+repositories {
+    ...
+    mavenCentral()
+    ...
+}
+
+// Add floodgate SDK as a dependency
+
+dependencies {
+    ...
+    compile group: 'io.floodgate', name: 'sdk', version: '1.0.0'
+    ...
+}
 ```
 
 ## Usage
 
 Below is a simple example of how you can use the Java SDK to check on the status of a flag.
 
-Add required imports
+
+
+### If you wish to use the module path
 
 ```java
+// module-info.java
+module your.module.name {
+    ...
+    requires io.floodgate.sdk;
+    ...
+}
+```
 
+Add required imports
+```java
+package your.package.name;
+...
+import io.floodgate.sdk.*;
+...
 ```
 
 Create a Floodgate Client instance
 
 ```java
-var client = FloodgateClientFactory.create("YOUR-API-KEY");
+// See javadoc if you have more complex requirements
+FloodgateClient client = FloodgateClientFactory.create("YOUR-API-KEY");
 ```
 
 Retrieve your flag value
 
 ```java
-var myFeatureFlag = client.getValue("my-feature-flag", false);
+boolean myFeatureFlag = client.getValue("my-feature-flag", false);
 
 if (myFeatureFlag) {
     System.out.println("my-feature-flag enabled");
