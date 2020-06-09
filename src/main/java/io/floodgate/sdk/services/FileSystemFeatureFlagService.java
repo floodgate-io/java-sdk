@@ -2,7 +2,7 @@ package io.floodgate.sdk.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.floodgate.sdk.config.FloodGateClientConfig;
+import io.floodgate.sdk.config.FloodgateClientConfig;
 import io.floodgate.sdk.io.FileReader;
 import io.floodgate.sdk.models.FeatureFlag;
 
@@ -19,13 +19,13 @@ import static java.lang.System.Logger.Level;
  */
 class FileSystemFeatureFlagService implements FeatureFlagService {
 
-    private final FloodGateClientConfig config;
+    private final FloodgateClientConfig config;
     private final FileReader fileReader;
     private final ObjectMapper json;
 
     private static final System.Logger logger = System.getLogger(FileSystemFeatureFlagService.class.getName());
 
-    public FileSystemFeatureFlagService(FloodGateClientConfig config, FileReader fileReader, ObjectMapper json) {
+    public FileSystemFeatureFlagService(FloodgateClientConfig config, FileReader fileReader, ObjectMapper json) {
         this.config = config;
         this.fileReader = fileReader;
         this.json = json;

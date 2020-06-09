@@ -1,6 +1,6 @@
 package io.floodgate.sdk;
 
-import io.floodgate.sdk.config.FloodGateClientConfig;
+import io.floodgate.sdk.config.FloodgateClientConfig;
 import io.floodgate.sdk.models.FeatureFlag;
 import io.floodgate.sdk.services.FeatureFlagService;
 import io.floodgate.sdk.utils.RolloutHelper;
@@ -13,14 +13,14 @@ import java.util.stream.Stream;
 
 import static java.lang.System.Logger.Level;
 
-class DefaultFloodGateClient implements FloodGateClient {
-    private final FloodGateClientConfig config;
+class DefaultFloodgateClient implements FloodgateClient {
+    private final FloodgateClientConfig config;
     private final FeatureFlagService flagService;
     private final Timer timer;
 
-    private static final System.Logger logger = System.getLogger(DefaultFloodGateClient.class.getName());
+    private static final System.Logger logger = System.getLogger(DefaultFloodgateClient.class.getName());
 
-    public DefaultFloodGateClient(FloodGateClientConfig config, FeatureFlagService flagService) {
+    public DefaultFloodgateClient(FloodgateClientConfig config, FeatureFlagService flagService) {
         this.config = config;
         this.flagService = flagService;
         this.timer = new Timer(true);

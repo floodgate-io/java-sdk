@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Configuration object for the floodgate client
  */
-public class FloodGateClientConfig {
+public class FloodgateClientConfig {
 
     private static final int SECONDS = 1000;
     private static final String API_BASE_URL = "https://cdn.floodgate.io";
@@ -22,7 +22,7 @@ public class FloodGateClientConfig {
     private int autoUpdateInterval = 60 * SECONDS;
     private boolean autoUpdateEnabled = true;
 
-    public FloodGateClientConfig(String apiKey) {
+    public FloodgateClientConfig(String apiKey) {
         if (apiKey == null || apiKey.trim().isEmpty()) {
             throw new IllegalArgumentException("apiKey is required");
         }
@@ -30,7 +30,7 @@ public class FloodGateClientConfig {
     }
 
     /**
-     * Gets the API key used for authentication and authorization with FloodGate service
+     * Gets the API key used for authentication and authorization with Floodgate service
      *
      * @return the API key
      */
@@ -90,7 +90,7 @@ public class FloodGateClientConfig {
     }
 
     /**
-     * Get the timout value in milliseconds used when making http requests to the FloodGate API.
+     * Get the timout value in milliseconds used when making http requests to the Floodgate API.
      *
      * <p>
      * Defaults to 5000ms (5 seconds)
@@ -102,7 +102,7 @@ public class FloodGateClientConfig {
     }
 
     /**
-     * Set the timout value in milliseconds used when making http requests to the FloodGate API.
+     * Set the timout value in milliseconds used when making http requests to the Floodgate API.
      *
      * @param apiTimeout value in milliseconds
      */
@@ -111,7 +111,7 @@ public class FloodGateClientConfig {
     }
 
     /**
-     * Get the URL used to load feature flags from FloodGate API.
+     * Get the URL used to load feature flags from Floodgate API.
      */
     public URI getApiUrl() {
         return URI.create(String.format("%s/environment-files/%s/%s/flags-config.json",
@@ -121,7 +121,7 @@ public class FloodGateClientConfig {
     }
 
     /**
-     * Gets value representing whether FloodGateClient should automatically reload feature flags on a timer
+     * Gets value representing whether FloodgateClient should automatically reload feature flags on a timer
      *
      * <p>
      * Default value of true
@@ -131,7 +131,7 @@ public class FloodGateClientConfig {
     }
 
     /**
-     * Set value representing whether FloodGateClient should automatically reload feature flags on a timer
+     * Set value representing whether FloodgateClient should automatically reload feature flags on a timer
      */
     public void setAutoUpdateEnabled(boolean autoUpdateEnabled) {
         this.autoUpdateEnabled = autoUpdateEnabled;

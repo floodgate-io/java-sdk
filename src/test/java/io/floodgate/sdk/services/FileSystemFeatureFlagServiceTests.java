@@ -1,7 +1,7 @@
 package io.floodgate.sdk.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.floodgate.sdk.config.FloodGateClientConfig;
+import io.floodgate.sdk.config.FloodgateClientConfig;
 import io.floodgate.sdk.io.FileReader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ public class FileSystemFeatureFlagServiceTests {
     public void test_returns_optional_empty_if_local_path_not_set() {
         var mapper = new ObjectMapper();
         var fileReader = new FileReader();
-        var config = new FloodGateClientConfig("a");
+        var config = new FloodgateClientConfig("a");
         config.setLocalFlagsFilePath(UUID.randomUUID().toString());
 
         var sut = new FileSystemFeatureFlagService(config, fileReader, mapper);
@@ -33,7 +33,7 @@ public class FileSystemFeatureFlagServiceTests {
     public void test_returns_optional_empty_for_invalid_path() {
         var mapper = new ObjectMapper();
         var fileReader = new FileReader();
-        var config = new FloodGateClientConfig("a");
+        var config = new FloodgateClientConfig("a");
         config.setLocalFlagsFilePath(UUID.randomUUID().toString());
 
         var sut = new FileSystemFeatureFlagService(config, fileReader, mapper);
@@ -46,7 +46,7 @@ public class FileSystemFeatureFlagServiceTests {
     @Test
     public void test_returns_optional_empty_when_invalid_file_contents() throws FileNotFoundException {
         var mapper = new ObjectMapper();
-        var config = new FloodGateClientConfig("a");
+        var config = new FloodgateClientConfig("a");
         config.setLocalFlagsFilePath(UUID.randomUUID().toString());
 
         var fileReader = mock(FileReader.class);
@@ -64,7 +64,7 @@ public class FileSystemFeatureFlagServiceTests {
     @Test
     public void test_returns_optional_empty_when_given_empty_json_array() throws FileNotFoundException {
         var mapper = new ObjectMapper();
-        var config = new FloodGateClientConfig("a");
+        var config = new FloodgateClientConfig("a");
         config.setLocalFlagsFilePath(UUID.randomUUID().toString());
 
         var fileReader = mock(FileReader.class);
@@ -82,7 +82,7 @@ public class FileSystemFeatureFlagServiceTests {
     @Test
     public void test_returns_list_when_given_valid_json() throws FileNotFoundException {
         var mapper = new ObjectMapper();
-        var config = new FloodGateClientConfig("a");
+        var config = new FloodgateClientConfig("a");
         config.setLocalFlagsFilePath(UUID.randomUUID().toString());
 
         var fileReader = mock(FileReader.class);

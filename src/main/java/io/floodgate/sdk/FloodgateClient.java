@@ -3,9 +3,9 @@ package io.floodgate.sdk;
 import java.util.Optional;
 
 /**
- * Main SDK object, used to interact with the FloodGate API.
+ * Main SDK object, used to interact with the Floodgate API.
  */
-public interface FloodGateClient {
+public interface FloodgateClient {
     /**
      * Get string value of flag for the given key
      *

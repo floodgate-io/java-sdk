@@ -5,27 +5,27 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("FloodGateClientConfig")
-public class FloodGateClientConfigTests {
+@DisplayName("FloodgateClientConfig")
+public class FloodgateClientConfigTests {
 
     @Test
     void test_cannot_instantiate_with_null_api_key() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new FloodGateClientConfig(null);
+            new FloodgateClientConfig(null);
         });
     }
 
     @Test
     void test_cannot_instantiate_with_empty_api_key() {
         assertThrows(IllegalArgumentException.class, () -> {
-            new FloodGateClientConfig("  ");
+            new FloodgateClientConfig("  ");
         });
     }
 
     @Test
     void test_can_instantiate_if_api_key_present() {
         assertDoesNotThrow(() -> {
-            new FloodGateClientConfig("foo-bar-baz");
+            new FloodgateClientConfig("foo-bar-baz");
         });
     }
 }

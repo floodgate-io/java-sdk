@@ -1,4 +1,4 @@
-# FloodGate SDK for Java
+# Floodgate SDK for Java
 
 ## Overview
 
@@ -6,7 +6,7 @@ This is the Java SDK for [Floodgate](https://floodgate.io), a feature rollout se
 
 ## Compatibility
 
-The FloodGate Java SDK is currently compatible with JDK 11+
+The Floodgate Java SDK is currently compatible with JDK 11+
 
 ## Installing
 
@@ -34,13 +34,13 @@ Below is a simple example of how you can use the Java SDK to check on the status
 Add required imports
 
 ```java
-import io.floodgate.sdk.FloodGateClientFactory;
+
 ```
 
-Create a FloodGate Client instance
+Create a Floodgate Client instance
 
 ```java
-var client = FloodGateClientFactory.create("YOUR-API-KEY");
+var client = FloodgateClientFactory.create("YOUR-API-KEY");
 ```
 
 Retrieve your flag value
