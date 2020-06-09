@@ -75,11 +75,12 @@ public class CdnFeatureFlagService implements FeatureFlagService {
             var map = items.stream().collect(Collectors.toMap(i -> i.key, i -> i));
             return Optional.of(map);
         } catch (IOException e) {
+            logger.log(Level.DEBUG, "Failed, IOException", e);
             return Optional.empty();
         } catch (InterruptedException e) {
+            logger.log(Level.DEBUG, "Failed, InterruptedException", e);
             return Optional.empty();
         }
-
     }
 }
 

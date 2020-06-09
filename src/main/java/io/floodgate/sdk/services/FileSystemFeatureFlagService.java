@@ -55,6 +55,7 @@ class FileSystemFeatureFlagService implements FeatureFlagService {
 
             return Optional.of(map);
         } catch (IOException e) {
+            logger.log(Level.DEBUG, "Failed, IOException", e);
             return Optional.empty();
         }
     }
