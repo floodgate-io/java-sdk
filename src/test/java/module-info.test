@@ -1,0 +1,28 @@
+// Allow deep reflection for test discovery - repeat for each test library you need
+--add-opens
+  io.floodgate.sdk/io.floodgate.sdk=org.junit.platform.commons
+--add-opens
+  io.floodgate.sdk/io.floodgate.sdk.config=org.junit.platform.commons
+--add-opens
+  io.floodgate.sdk/io.floodgate.sdk.services=org.junit.platform.commons
+--add-opens
+  io.floodgate.sdk/io.floodgate.sdk.utils=org.junit.platform.commons
+--add-opens
+  io.floodgate.sdk/io.floodgate.sdk.caching=org.junit.platform.commons
+
+--add-opens
+  io.floodgate.sdk/io.floodgate.sdk=org.mockito
+--add-opens
+  io.floodgate.sdk/io.floodgate.sdk.config=org.mockito
+--add-opens
+  io.floodgate.sdk/io.floodgate.sdk.services=org.mockito
+
+// requires
+--add-reads
+  io.floodgate.sdk=org.junit.jupiter.api
+--add-reads
+  io.floodgate.sdk=org.mockito
+--add-reads
+  io.floodgate.sdk=mockito.junit.jupiter
+--add-reads
+  io.floodgate.sdk=net.bytebuddy
